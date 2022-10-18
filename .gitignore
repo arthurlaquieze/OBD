@@ -5,6 +5,9 @@ Gemfile.lock
 .vscode
 _site
 
+# macOS garbage
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

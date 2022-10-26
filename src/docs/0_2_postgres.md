@@ -627,15 +627,20 @@ EXECUTE PROCEDURE verifier_moyenne();
 
 For the evaluation of this BE, you will compare PostgreSQL to a popular NoSQL database, MongoDB.
 
-[Installation on Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
-[Installation on Mac OS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/)
-[Installation on Arch Linux](https://wiki.archlinux.org/title/MongoDB)
-[Installation on Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb)
-[Installation on Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/)
++ [Installation on Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
++ [Installation on Mac OS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/)
++ [Installation on Arch Linux](https://wiki.archlinux.org/title/MongoDB)
++ [Installation on Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb)
++ [Installation on Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/)
 
 You will need to export the mexico86 database by [converting it to
-JSON](https://www.mongodb.com/compare/mongodb-postgresql/dsl-migrating-postgres-to-mongodb)
-and then importing it into Mongodb using the `mongoimport` command:
+JSON](https://www.mongodb.com/compare/mongodb-postgresql/dsl-migrating-postgres-to-mongodb). Scripts for exporting the tables `match` and `pays` are provided in the github repository:
+
+```bash
+psql -d db-mexico86 -f export_pays.sql > pays.json
+```
+
+Once you have a JSON file for a table, import it as a collection in Mongodb using the `mongoimport` command:
 
 ```bash
 mongoimport --db mexico --collection pays --jsonArray mexico86/pays.json

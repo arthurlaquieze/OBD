@@ -623,3 +623,34 @@ EXECUTE PROCEDURE verifier_moyenne();
 
 </details>
 
+## NoSQL
+
+For the evaluation of this BE, you will compare PostgreSQL to a popular NoSQL database, MongoDB.
+
+[Installation on Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
+[Installation on Mac OS](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/)
+[Installation on Arch Linux](https://wiki.archlinux.org/title/MongoDB)
+[Installation on Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb)
+[Installation on Windows](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/)
+
+You will need to export the mexico86 database by [converting it to
+JSON](https://www.mongodb.com/compare/mongodb-postgresql/dsl-migrating-postgres-to-mongodb)
+and then importing it into Mongodb using the `mongoimport` command:
+
+```bash
+mongoimport --db mexico --collection pays --jsonArray mexico86/pays.json
+```
+
+MongoDB query format can be found in the [documentation](https://www.mongodb.com/docs/mongodb-shell/crud/read/#std-label-mongosh-read).
+
+The final deliverable for this project is a [MongoDB script](https://www.mongodb.com/docs/mongodb-shell/write-scripts/). You can run your script to test the result output using:
+
+```bash
+mongosh --file script.js
+```
+
+Make sure the results match with the responses from PostgreSQL; you will need to wrap your query statements in `print` or `printjson` functions.
+
+## Deliverables
+
+For evaluation, you should provide a PostgreSQL script and a MongoDB script which both reproduce the results of exercises 1.2, 1.3, 1.4, 1.5, 1.6, 3.2, 3.3, and 3.4. You should provide only 1 script per DBMS. The output format between the two scripts will be different but the content should be the same. You should upload both scripts to the LMS by November 24th.

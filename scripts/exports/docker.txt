@@ -1,0 +1,6 @@
+docker run -d \
+  -it \
+  --name test-mongo \
+  --mount type=bind,source='/Users/arthur/Dev/SDD - dev/Outils du Big Data/OBD/scripts/exports',target=/mtn/pg_export \
+  mongo:latest
+  

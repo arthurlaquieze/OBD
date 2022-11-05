@@ -1,6 +1,6 @@
 db = connect("mongodb://localhost/mexico");
 
-// DBQuery.shellBatchSize = 300
+// DBQuery.shellBatchSize = 300;
 DBQuery.shellBatchSize = 10;
 
 print("question 1.2 all participants");
@@ -185,23 +185,39 @@ printjson(
 );
 
 print("\nquestion 3.4 total goals per Poule, ordered by group");
-// db.matchbutsglobal.aggregate([
-//     {
-//       $match: {
-//         type: {$eq: "Poule"}
-//       },
-//     },
-//     {
-//       $group: {
-//         averageGoals: {
-//           $avg: "$buts",
-//         },
-//       },
-//     },
-//     {
-//       $project: {
-//         averageGoals: 1,
-//         _id: "$",
-//       },
-//     },
-//   ])
+goalsPerPool = db.matchbutsglobal.aggregate([
+  {
+    $match: {
+      type: { $eq: "Poule" },
+    },
+  },
+  {
+    $lookup: {
+      from: "pays",
+      localField: "paysv",
+      foreignField: "nom",
+      as: "pays",
+    },
+  },
+  {
+    $project: {
+      buts: 1,
+      groupe: "$pays.groupe",
+      _id: 0,
+    },
+  },
+  {
+    $group: {
+      _id: "$groupe",
+      goals: {
+        $sum: "$buts",
+      },
+    },
+  },
+  {
+    $sort: {
+      _id: 1,
+    },
+  },
+]);
+printjson(goalsPerPool);

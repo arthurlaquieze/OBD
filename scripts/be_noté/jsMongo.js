@@ -1,6 +1,6 @@
 db = connect("mongodb://localhost/mexico");
 
-config.set("displayBatchSize", 7);
+config.set("displayBatchSize", 300); // allows to display larger results
 
 print("\nquestion 1.2 all participants");
 printjson(db.pays.find({}, { nom: 1, _id: 0 }));

@@ -1,15 +1,14 @@
 db = connect("mongodb://localhost/mexico");
 
-// DBQuery.shellBatchSize = 300;
-DBQuery.shellBatchSize = 10;
+config.set("displayBatchSize", 7);
 
-print("question 1.2 all participants");
+print("\nquestion 1.2 all participants");
 printjson(db.pays.find({}, { nom: 1, _id: 0 }));
 
-print("\nquestion 1.3 all matchs");
+print("\n\nquestion 1.3 all matchs");
 printjson(db.matchs.find({}, { paysv: 1, paysl: 1, _id: 0 }));
 
-print("\nquestion 1.4 match played on the 5th of June 1986");
+print("\n\nquestion 1.4 match played on the 5th of June 1986");
 printjson(
   db.matchs.find(
     { date: { $eq: "1986-06-05" } },
@@ -17,12 +16,12 @@ printjson(
   )
 );
 
-print("\nquestion 1.5 France's opponents");
+print("\n\nquestion 1.5 France's opponents");
 franceL = db.matchs.find({ paysl: { $eq: "France" } }, { paysv: 1, _id: 0 });
 franceV = db.matchs.find({ paysv: { $eq: "France" } }, { paysl: 1, _id: 0 });
 printjson([...franceL.toArray(), ...franceV.toArray()]);
 
-print("\nquestion 1.5 bis, renaming fields paysv and paysl to pays");
+print("\n\nquestion 1.5 bis, renaming fields paysv and paysl to pays");
 againstFrance = db.matchs.aggregate([
   { $match: { paysl: { $eq: "France" } } },
   { $project: { pays: "$paysv", _id: 0 } },
@@ -38,7 +37,7 @@ againstFrance = db.matchs.aggregate([
 ]);
 printjson(againstFrance);
 
-print("\nquestion 1.6 world cup winner");
+print("\n\nquestion 1.6 world cup winner");
 finale = db.matchs.aggregate([
   { $match: { type: { $eq: "Finale" } } },
   {
@@ -56,9 +55,7 @@ finale = db.matchs.aggregate([
 ]);
 printjson(finale);
 
-print(
-  "\nquestion 3.1 add matchbutsglobal table. Code below is to be run only once"
-);
+print("\n\nquestion 3.1 add matchbutsglobal view");
 
 if ([...db.getCollectionNames()].includes("matchbutsglobal")) {
   printjson(
@@ -76,7 +73,7 @@ if ([...db.getCollectionNames()].includes("matchbutsglobal")) {
     ])
   );
 } else {
-  print("creating matchbutsglobal view");
+  print("\ncreating matchbutsglobal view...");
   db.createView("matchbutsglobal", "matchs", [
     {
       $project: {
@@ -88,9 +85,10 @@ if ([...db.getCollectionNames()].includes("matchbutsglobal")) {
       },
     },
   ]);
+  print("done");
 }
 
-print("\nquestion 3.2 average goals scored when France was playing");
+print("\n\nquestion 3.2 average goals scored when France was playing");
 averageGoals = db.matchs.aggregate([
   {
     $match: {
@@ -122,7 +120,7 @@ averageGoals = db.matchs.aggregate([
 ]);
 printjson(averageGoals);
 
-print("\n3.2 bis using the view");
+print("\n\n3.2 bis using the view");
 printjson(
   db.matchbutsglobal.aggregate([
     {
@@ -147,7 +145,7 @@ printjson(
   ])
 );
 
-print("\nquestion 3.3 total goals scored by France");
+print("\n\nquestion 3.3 total goals scored by France");
 printjson(
   db.matchs.aggregate([
     {
@@ -184,7 +182,7 @@ printjson(
   ])
 );
 
-print("\nquestion 3.4 total goals per Poule, ordered by group");
+print("\n\nquestion 3.4 total goals per Poule, ordered by group");
 goalsPerPool = db.matchbutsglobal.aggregate([
   {
     $match: {

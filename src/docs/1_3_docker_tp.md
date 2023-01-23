@@ -1,30 +1,18 @@
 # Docker: Hands on
 
-## How to run this ?
+## 0. How to run this ?
 
-We will discover the basics of docker and you will be able to manipulate your first images and containers !
+!!! abstract
 
-Two solutions to do that : 
+    We will discover the basics of docker and you will be able to manipulate your first images and containers !
 
-1) You are inside sing the google cloud deep learning VM created previously
+You should be inside the Github Codespace you created and have google cloud SDK installed in it
 
-2) **It's also possible to do this from google cloud shell ([shell.cloud.google.com](shell.cloud.google.com))** as well but you will be limited in disk space later on : Skip 5. if that is the case.
+If not, refer to the previous tutorial and do step 2 and 3
 
-Why only two of these ? That's because both have git and docker installed and installing docker is a pain.
+This codespace has everything you need, including docker
 
-If you are running linux on your laptop you may [install docker](https://docs.docker.com/engine/install/) and do everything from your computer
-
-Otherwise... don't ;)
-
-If you are using the deep learning vm
-
-Disconnect from your instance and relaunch it while mapping 8888 as well. You should have the vm jupyter's lab on 8080, and 8888 free
-
-  <details><summary>Solution</summary>
-
-    `gcloud compute ssh user@machine-name --zone europe-west4-a -- -L 8080:localhost:8080 -L 8081:localhost:8081 -L 8888:localhost:8888`
-
-  </details>
+If you want to do everything from your linux machine you can [install docker](https://docs.docker.com/engine/install/ubuntu/) but I don't recommend it for now
 
 ## 1. Manipulating docker for the 1st time
 
@@ -205,15 +193,8 @@ $ docker port static-site
 80/tcp -> 0.0.0.0:32773
 ```
 
-**if you are on a distant machine and you have mapped 8888:localhost:8888, you have to run 
-
-```bash
-$ docker run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 dockersamples/static-site
-```
-to be able to connect to localhost:8888 and see the website
-
-if you are on cloud shell, open the web preview on 8888
-
+If you are on codespace, create [a port forwarding on port 80](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace) to connect to the website
+ 
 If you are running [Docker for Mac](https://docs.docker.com/docker-for-mac/), [Docker for Windows](https://docs.docker.com/docker-for-windows/), or Docker on Linux, you can open `http://localhost:[YOUR_PORT_FOR 80/tcp]`. For our example this is `http://localhost:32773`.
 
 If you are using Docker Machine on Mac or Windows, you can find the hostname on the command line using `docker-machine` as follows (assuming you are using the `default` machine).
@@ -694,7 +675,7 @@ However, it requires naming the image in a specific fashion: `eu.gcr.io/${PROJEC
 
 * Go to container registry https://console.cloud.google.com/gcr, you should see your docker image :)
 
-## 5.  Data Science Standardized Environment
+## 5. Data Science Standardized Environment and mounting volumes
 
 ### 5.1 Intro
 
@@ -733,21 +714,24 @@ docker run --rm -it \
   /bin/bash /run_jupyter.sh
 ```
 
-Note: this image is very large !
+Note: this image is very large, delete it afterwards using `docker rmi`
 
 Options breakdown:
+
 * `--rm` remove the container when we stop it
 * `-it` run the container in interactive mode
 * `-p` forward port from host:container
 * other: options from the kaggle container
 
-You should now see a jupyter lab with mlclass accessible if you connect your browser (in your laptop) to port 8888 (localhost:8888)
+You should now see a jupyter lab with mlclass accessible if you do another port mapping
 
-So basically, we mapped the ports local 8888 to vm 8888 and vm 8888 to docker 8080
+So to connect to the jupyter lab we mapped the ports local 8888 to vm 8888 and vm 8888 to docker 8080
+
+We also exposed the local disk to the container
 
 ## 6. Bonus - Using Google Cloud Tools for Docker
 
-Using cloud shell you should be able to do the Hello World Dockerfile exercise except that instead of using docker build you use Google Cloud Build
+Using codespace, you should be able to do the Hello World Dockerfile exercise except that instead of using docker build you use Google Cloud Build
 
 Tutorial: <https://cloud.google.com/cloud-build/docs/quickstart-docker>
 

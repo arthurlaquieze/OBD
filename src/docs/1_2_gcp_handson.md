@@ -52,15 +52,19 @@ Have a look at the overview : [https://docs.github.com/en/codespaces/overview](h
 !!! note
     Google Cloud has a similar service with Google Cloud Shell but since Codespaces is way more powerful, we will be using that
 
-### Connect to Github Codespaces
+### Create your codespace and connect to it
 
-Go to [https://cloud.google.com/free](codespace)
+Go to [https://github.com/codespaces](https://github.com/codespaces)
 
 ![img.png](slides/static/img/codespace.png)
 
 * Click on the top left corner for a new codespace
 * It should launch a browser with a vscode
 * Launch a terminal using the top right menu
+
+**If that does not work,** go to [https://github.com/github/codespaces-blank](https://github.com/github/codespaces-blank) and create a codespace from there
+
+![](slides/static/img/codespacesblank.png)
 
 ### Explore github codespaces
 

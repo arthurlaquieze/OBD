@@ -1,7 +1,7 @@
 ---
 title: Orchestration (intro)
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:

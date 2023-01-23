@@ -1,7 +1,7 @@
 ---
 title: Deployment & MLOPS
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:
@@ -15,7 +15,8 @@ revealOptions:
 
 This class
 
-- **Lecture about Intro to MLOPS & Containers Deployment**
+- **Intro to cloud for ML**
+- **Intro to MLOps**
 - **Hands on : Deploy your model in production**
 
 <!--s-->

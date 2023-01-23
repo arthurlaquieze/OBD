@@ -1,7 +1,7 @@
 ---
 title: Cloud Computing
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:

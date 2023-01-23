@@ -1,7 +1,7 @@
 ---
 title: Introduction to Data Distribution
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--s-->
 revealOptions:

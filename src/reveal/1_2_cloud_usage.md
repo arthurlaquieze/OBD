@@ -1,7 +1,7 @@
 ---
 title: Using the cloud
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:
@@ -61,13 +61,13 @@ gcloud compute --project=deeplearningsps instances create ${INSTANCE_NAME} \
 
 <!--v-->
 
-Before...
+#### Before...
 
 ![catcomputer](https://i.pinimg.com/originals/6b/92/a0/6b92a03c8b87aa448f8206ee57b5a4fc.jpg)
 
 <!--v-->
 
-After...
+#### After...
 
 ```yaml
 resources:
@@ -101,6 +101,12 @@ resources:
 #### Pet vs Cattle
 
 ![petvscattle](static/img/pet-vs-cattle.png)
+
+<!--v-->
+
+#### Fully virtual development environment
+
+![codespaces](https://github.blog/wp-content/uploads/2021/08/1200x630-codespaces-social.png)
 
 <!--s-->
 
@@ -210,6 +216,12 @@ but you will "deal with" cloud computing one way or another !
 
 #### Personal experience
 
-- What ?
-- Why ?
-- Alternatives ?
+- What do I use ?
+- Why do I use it ?
+- How do I do ?
+
+<!--v-->
+
+#### Quick demo
+
+How I use the cloud in my daily job

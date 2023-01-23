@@ -1,7 +1,7 @@
 ---
 title: Functional Programming
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--s-->
 revealOptions:

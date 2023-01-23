@@ -1,7 +1,7 @@
 ---
 title: Data Computation Intro
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:
@@ -13,9 +13,9 @@ revealOptions:
     height: '100%'
 ---
 
-![icebreaker](https://i.imgur.com/wLSuwQQ.gif)
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/97/120106-G-IA651-272_%286668116881%29.jpg" alt="" width="40%" height="40%" style="background:none; border:none; box-shadow:none;"/>
 
-https://ahaslides.com/OBD211
+https://ahaslides.com/OBD231
 
 <!--v-->
 
@@ -23,7 +23,7 @@ https://ahaslides.com/OBD211
 
 by a data scientist, for data scientists
 
-**ISAE-SUPAERO, SDD, January 2021**
+**ISAE-SUPAERO, SDD, January 2023**
 
 Florient CHOUTEAU
 
@@ -71,7 +71,7 @@ eg. having manipulated and having a rough idea of...
 
 I am not a Cloud Engineer, or a Devops,  ... <!-- .element: class="fragment" data-fragment-index="1" -->
 
-... so I'll be showing you these from a "ML Engineer" point of view  <!-- .element: class="fragment" data-fragment-index="2" -->
+... so I'll be showing you these from a "AI Engineer" point of view  <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ... and try to give you pointers for your internship / 1st job ...  <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -92,7 +92,7 @@ I am not a Cloud Engineer, or a Devops,  ... <!-- .element: class="fragment" dat
 
 ### Schedule
 
-- 18/01: 3h - Intro to Cloud Computing & GCP
-- 19/01: 3h - Containers & Docker
-- 25/01: 3h - BE Docker & GCP
-- 25/01: 3h - BE Deployment & Orchestration
+- 23/01: 3h - Intro to Cloud Computing & GCP
+- 24/01: 3h - Containers & Docker
+- 31/01: 3h - BE Docker & GCP
+- 06/02: 3h - BE Deploy your Machine Learning Model

@@ -30,8 +30,7 @@ nav:
   - Introduction: 1_1_overview.md
   - Cloud Computing:
     - Lectures: 1_2_cloud.md
-    - TP 1 GCP Initial Setup & First Steps : 1_2_gcp_setup.md
-    - TP 2 GCP Hands On: 1_2_gcp_handson.md
+    - TP: 1_2_gcp_handson.md
   - Containers, Docker:
     - Lecture: 1_3_containers.md
     - TP: 1_3_docker_tp.md

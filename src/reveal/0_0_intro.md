@@ -1,7 +1,7 @@
 ---
 title: Tools of Big Data
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:

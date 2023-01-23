@@ -1,7 +1,7 @@
 ---
 title: Google Cloud Platform
 theme: evo
-highlightTheme: zenburn
+highlightTheme: vs
 separator: <!--s-->
 verticalSeparator: <!--v-->
 revealOptions:
@@ -15,7 +15,7 @@ revealOptions:
 
 ## Google Cloud Platform
 
-<img src="https://berlioz.cloud/blog/images/google-cloud-platform-and-applications/header.png" alt="" width="60%" height="60%" style="background:none; border:none; box-shadow:none;"/>
+<img src="https://i.pinimg.com/736x/a2/58/39/a258398316189a70bc8f7ff17d7decdb.jpg" alt="" width="60%" height="60%" style="background:none; border:none; box-shadow:none;"/>
 
 <!--v-->
 
@@ -28,7 +28,7 @@ revealOptions:
 
 <!--v-->
 
-![](https://static.packt-cdn.com/products/9781788837675/graphics/ee72c164-888d-4cec-b3f9-efd3b8e8e4cb.png)
+![](https://cloud.orange-business.com/wp-content/uploads/2020/11/logo-google-cloud-platform.png)
 
 <!--v-->
 
@@ -158,6 +158,8 @@ We usually connect to web app using `http://{ip}:{port}`
 
 ![ssh-tunnel](https://rufflewind.com/img/ssh-port-forwarding/local-port-forwarding-example.png)
 
+[A nice visual guide](https://iximiuz.com/en/posts/ssh-tunnels/)
+
 <!--v-->
 
 #### Google Cloud Shell "Magic"
@@ -177,7 +179,15 @@ We usually connect to web app using `http://{ip}:{port}`
 
 <!--v-->
 
+#### Github Codespaces
+
+![codespaces](https://github.blog/wp-content/uploads/2021/08/1200x630-codespaces-social.png)
+
+<!--v-->
+
 #### Demo
 
 - Google Compute Engine Interface
 - Google Cloud Shell
+- Github codespaces
+

@@ -183,6 +183,8 @@ We usually connect to web app using `http://{ip}:{port}`
 
 ![codespaces](https://github.blog/wp-content/uploads/2021/08/1200x630-codespaces-social.png)
 
+https://docs.github.com/en/codespaces/overview
+
 <!--v-->
 
 #### Demo

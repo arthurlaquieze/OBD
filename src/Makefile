@@ -42,7 +42,7 @@ deploy:
         --static ../../slides
 	git checkout gh-pages
 	git add ../slides
-	git commit -m "Updated reveal slides & mkdocs"
+	git commit -m "Updated reveal slides"
 	git push origin gh-pages
 	git checkout master
 

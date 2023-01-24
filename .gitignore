@@ -5,6 +5,10 @@ Gemfile.lock
 .vscode
 _site
 
+# google cloud
+google-cloud-sdk/
+google-cloud-cli-414.0.0-linux-x86_64.tar.gz
+
 # macOS garbage
 .DS_Store
 

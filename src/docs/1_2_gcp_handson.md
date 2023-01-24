@@ -7,7 +7,7 @@
     You will also discover a very useful tool, a managed jupyter notebook service from google named Google Colab which may be very important for your future developments this year
 
 !!! warning
-    It is advised to connect to **eduroam**
+    It is advised to connect to **eduroam** if you want to use your local machine
 
 !!! warning
     Don't forget to shutdown everything after !
@@ -42,23 +42,29 @@ You should have access to the isae-sdd project and be able to access [the interf
 * [Github Codespaces](https://github.com/features/codespaces) is a "managed VM" made available to develop without needing to configure locally your environment.
 * Compared to configured a VM by yourself, this one comes loaded with developer tools, and thus is faster to use,
 * You have a free tier of 60 CPU hours / months and some disk space
-* You pay for the CPu when the VM is ON and for the disk everytime
+* You pay for the CPI when the VM is ON and for the disk when the codespace is create
+
+Have a look at the overview : [https://docs.github.com/en/codespaces/overview](https://docs.github.com/en/codespaces/overview) 
 
 !!! question
     * Can you describe it with your own words ?
-    * What would be the closest service that you can find on GCP that is similar to cloud shell ?
 
-### Connect to github codespaces
+!!! note
+    Google Cloud has a similar service with Google Cloud Shell but since Codespaces is way more powerful, we will be using that
 
-Go to [https://cloud.google.com/free](codespace)
+### Create your codespace and connect to it
+
+Go to [https://github.com/codespaces](https://github.com/codespaces)
 
 ![img.png](slides/static/img/codespace.png)
 
-Click on the top left corner for a new codespace
+* Click on the top left corner for a new codespace
+* It should launch a browser with a vscode
+* Launch a terminal using the top right menu
 
-It should launch a browser with a vscode
+**If that does not work,** go to [https://github.com/github/codespaces-blank](https://github.com/github/codespaces-blank) and create a codespace from there
 
-Launch a terminal using the top right menu
+![](slides/static/img/codespacesblank.png)
 
 ### Explore github codespaces
 
@@ -82,46 +88,49 @@ Launch a terminal using the top right menu
 ??? note "Help"
     `htop` will give you your current usage and available cores, or you can do `nproc`
 
-Try to upload a file from your computer to the codespace by right clicking on the file explorer on the left
+* Try to upload a file from your computer to the codespace by right clicking on the file explorer on the left
 
 ### A demo of codespace port forwarding / web preview
 
-In your codespace, run `jupyter lab` to launch the jupyter lab installed in it
+* In your codespace, run `jupyter lab` to launch the jupyter lab installed in it
+* Check the "port" preview : It should have a new entry with the 8888 port. If not, create it manually
+* Click on open in browser
+* Copy the token from your terminal to the web browser
+* You are new in a jupyterlab hosted on your github codespace VM !
 
-Check the "port" preview : It should have a new entry with the 8888 port
+!!! question
+    Magic !? What do you think is happening ? Try to describe it with your own words
 
-Click on open in browser
+* Cancel (CTRL+C) the jupyter process
 
-Copy the token from your terminal
-
-You are new in a jupyterlab hosted on your github codespace VM !
-
-Magic !? What do you think is happening ? Try to describe it with your own words
-
-Cancel (CTRL+C) the jupyter process
+To learn more about port forwarding in codespaces, refer to the [documentation](https://docs.github.com/en/codespaces/developing-in-codespaces/forwarding-ports-in-your-codespace)
 
 ## 3. Install Google Cloud SDK & Configure the shell
 
 If you want to interact with GCP from your computer or codespaces, you will need to install the [Google Cloud SDK](https://cloud.google.com/sdk), which will also install a shell if you are on windows
 
-If you don't, you will have to do everything from google cloud shell (it's not as easy), so I recommend installing the SDK.
+!!! note
+    You can install the cloud shell locally, but I recommend using your **codespace**
 
-The best ways to interact with google cloud SDK is with a terminal so in that order:
+??? "Installing locally"
 
-* Linux (either VM or native): <https://cloud.google.com/sdk/docs/install#linux>
-* MacOS: <https://cloud.google.com/sdk/docs/install#mac>
-* Windows Subsystem for Linux: see Linux
-* Windows: <https://cloud.google.com/sdk/docs/install#windows>
+    The best ways to interact with google cloud SDK is with a terminal so in that order:
 
-If you are on codespace, follow the ubuntu instructions to install the google cloud sdk,
+    * Ubuntu / Debian <https://cloud.google.com/sdk/docs/install#deb>
+    * Other Linux (either VM or native): <https://cloud.google.com/sdk/docs/install#linux>
+    * MacOS: <https://cloud.google.com/sdk/docs/install#mac>
+    * Windows Subsystem for Linux: see Linux
+    * Windows: <https://cloud.google.com/sdk/docs/install#windows>
+
+If you are on codespace, follow the [following instructions](https://cloud.google.com/sdk/docs/install#deb) to install the google cloud sdk,
 
 Then run `gcloud init` in your terminal to configure the [google cloud sdk](https://cloud.google.com/sdk/docs/initializing) with your account
 
-You should at some point see this :
+You should at some point see at terminal with a link. Click on the link and login with your google accound, then copy the token to your codespace.
 
 ![logintoken](slides/static/img/login.png)
 
-Copy the token to your codespace
+Your github codespace is now configured with your google cloud platform credentials
 
 ## 4. My first Google Compute Engine Instance
 
@@ -141,27 +150,29 @@ First, we will make our first steps by creating a compute engine instance (a vm)
 * Give it a name of your choice (that you can remember)
 * **DO NOT SHUT IT DOWN** for now
 
-Note : If you were using the command line :
+??? Note
 
-```bash
-gcloud compute instances create {name} --project={your-project} --zone={your-zone} \
-  --machine-type=n1-standard-1 \
-  --image=ubuntu-2204-jammy-v20230114 \
-  --image-project=ubuntu-os-cloud
-```
+    If you were using the command line, you would have done this
+    
+    ```bash
+    gcloud compute instances create {name} --project={your-project} --zone={your-zone} \
+      --machine-type=n1-standard-1 \
+      --image=ubuntu-2204-jammy-v20230114 \
+      --image-project=ubuntu-os-cloud
+    ```
 
 ### Connecting to SSH
 
-!!! warning
-    If you can't SSH to the machine, use codespaces to run this
-
-* Connect to ssh from google cloud shell or your terminal to the machine
+* Connect to ssh from the google cloudspace
 
   <details><summary>Solution</summary>
 
-      `gcloud compute ssh {USER}@{MACHINE NAME}`
+      `gcloud compute ssh ${MACHINE-NAME}`
 
   </details>
+
+!!! note
+    We are using `google compute ssh` instead of ssh. This is an automated tool that takes care of locating your machine in GCP and transferring the keys
 
 * Check available disk space
 
@@ -187,6 +198,14 @@ gcloud compute instances create {name} --project={your-project} --zone={your-zon
 
   </details>
 
+* Check the number of cores available and the RAM
+
+  <details><summary>Solution</summary>
+
+    `htop`
+
+  </details>
+  
 * Check instance google cloud properties
 
   <details><summary>Solution</summary>
@@ -200,14 +219,14 @@ gcloud compute instances create {name} --project={your-project} --zone={your-zon
 * Shutdown the VM (from the web browser), check the previous codelab to see how to do it
 * Select it and click on EDIT
 * Change the machine type to `n1-standard-2` ([link to documentation](https://cloud.google.com/compute/docs/instances/changing-machine-type-of-stopped-instance))
-* Relaunch it, reconnect to it and try to list the CPUs & RAM amount again
+* Relaunch it, reconnect to it and try to check using `htop` the number of cores & RAM available
+* Note : If you run `cat /proc/cpuinfo` again you will see that you are running on the same hardware !
 
 Magic isn't it ? 
 
 Note: If you had any files and specific configuration, they would still be here !
 
-
-### Persistent SSH sessions with TMUX
+### Optional but useful : Persistent SSH sessions with TMUX
 
 <https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/>
 
@@ -218,8 +237,8 @@ Note: If you had any files and specific configuration, they would still be here 
 * To check you have understood you should be able to:
   * Connect to your remote instance with ssh
   * Start a tmux session
-  * Launch a process (for example `top`) inside it
-  * Detach from the session (`CTRL+B :detach`)
+  * Launch a process (for example `htop`) inside it
+  * Detach from the session (`CTRL+B` then type `:detach`)
   * Kill the ssh connection
   * Connect again
   * `tmux attach` to your session
@@ -251,9 +270,7 @@ Here we will discover google cloud storage, upload some files from your computer
 
 * What is [Google Cloud Storage ?](https://cloud.google.com/storage) Try to describe it with your own words
 
-* This [codelab](https://codelabs.developers.google.com/codelabs/cloud-upload-objects-to-cloud-storage) will guide you through the basics of google cloud storage
-
-* Use this codelab something from your computer to google cloud storage from the web browser. **DO NOT DELETE THE FILES YET**
+* Use [this tutorial](https://cloud.google.com/storage/docs/discover-object-storage-console) to upload something from your computer to google cloud storage from the web browser (**DO NOT DELETE THE FILES YET**)
 
 Now we will download it using the google cloud CLI tool,
 
@@ -262,7 +279,7 @@ Now we will download it using the google cloud CLI tool,
 * Upload a file to a bucket
 * Download a file from a bucket
 
-What if we want to do the same from the VM ?
+**What if we want to do the same from the VM ?**
 
 * Now go back to your machine
 
@@ -284,7 +301,7 @@ What if we want to do the same from the VM ?
 
 **DELETE THE BUCKET NOW**
 
-## 6. Google Compute Engine from the CLI and "deep learning VMs"
+## 6. Google Compute Engine from the CLI, "deep learning VMs" and SSH tunnels
 
 Here we will use the google cloud sdk to create a more complex VM with a pre-installed image and connect to its jupyter server
 
@@ -316,31 +333,23 @@ gcloud compute instances create $INSTANCE_NAME \
 * What changed ?
 * If you want to learn more about compute images, image families etc... [go here](https://cloud.google.com/ai-platform/deep-learning-vm/docs/concepts-images)
 
-### Connect to ssh to this machine
+### Connect with ssh to this machine and do a port forwarding
 
-* Connect to your instance using the gcloud cli & ssh
-
-!!! warning
-    If you can't SSH to the machine, use cloud shell to SSH to the machine, then the web preview on port 8080
+* Connect to your instance using the gcloud cli & ssh from the codespace
 
 * This time, you will [forward some ports](https://cloud.google.com/ai-platform/deep-learning-vm/docs) as well
-  <details><summary>Solution</summary>
- TOC
-{:toc}
-    `gcloud compute ssh user@machine-name --zone=europe-west1-b -- -L 8080:localhost:8080
 
+  <details><summary>Solution</summary>
+    gcloud compute ssh user@machine-name --zone=europe-west1-b -- -L 8080:localhost:8080
   </details>
 
-* Go to your local browser and type `http://localhost:8080`, you should be in a jupyter notebook under the user `jupyter`
-
-!!! note
-    If you are in codespace, use the port forwarding utility, add a new port (8080). It may be done automatically
-
+If you are in codespace, use the port forwarding utility, add a new port (8080). It may be done automatically, you should be in a jupyter notebook under the user `jupyter`
 
 !!! question
-    Where are we ? Where is the jupyter lab ?
+    Where are we ? Where is the jupyter lab hosted ?
+    What is the difference between this and the jupyter lab we launched from codespace
 
-![tunnels](slides/static/img/tunnelception.png)
+![tunnels](slides/static/img/codespaceception.png)
 
 You can try to play with the jupyter lab (that has a code editor and terminal capabilities) to get a feel of manipulating a remote instance
 
@@ -348,24 +357,30 @@ Try to `pip3 list` to check all dependencies installed !
 
 * Delete the instance
 
-## 8. Introduction to infrastructure as code
+## 7. IMPORTANT : Cleaning up
+
+* **DELETE ALL THE GCP INSTANCES YOU CREATED**
+* **SHUTDOWN YOUR CODESPACE**
+
+!!! warning
+    Don't forget to delete your instances in GCP
+
+How to shutdown codespaces :
+
+![stop](slides/static/img/stop.png)
+
+- Click on stop codespace to shut it down (you "pay" for the disk with your free credits)
+- Click on kill codespace to delete it
+
+## 8. Optional - Introduction to infrastructure as code
 
 * [This tutorial](https://cloud.google.com/deployment-manager/docs/quickstart) will guide you through google cloud deployment manager, which is a way to deploy google compute engine instances using configuration files
 
 * Don't forget to adapt machine configurations and zone to your use case (see above)
 
-## 9. MANDATORY --- Cleaning up
+If you run this, don't forget to clean everything up afterwards
 
-**DELETE ALL THE INSTANCES YOU CREATED NOW**
-
-**SHUTDOWN YOUR CODESPACE**
-
-!!! warning
-    Don't forget to delete your instances
-
-![stop](slides/static/img/stop.png)
-
-## 10. Optional - Google Colaboratory
+## 9. Optional - Google Colaboratory
 
 !!! abstract
     Previous versions of this class happened before the ML Class so there was an introduction to google collab. You should have extensively used this tool before, so skip this :)

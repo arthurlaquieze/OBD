@@ -263,7 +263,7 @@ Examples
 
 <img src="https://cloud.orange.com/ui/app/static/assets/brand/logo_header_login.png" alt="" width="20%" height="20%" style="background:none; border:none; box-shadow:none;"/>
 
-OVH est entré en bourse en 2021
+OVH went public in 2021
 
 <!--v-->
 
@@ -277,17 +277,21 @@ OVH est entré en bourse en 2021
 
 🇪🇺
 
+Cloud Federation in Europe
+
 ![gaiax](https://www.data-infrastructure.eu/GAIAX/Redaktion/EN/Bilder/gaia-x.jpg?__blob=normal&v=1&size=834w)
 
 https://www.data-infrastructure.eu/GAIAX/
 
 <!--v-->
 
-<img src="https://cdn.statcdn.com/Infographic/images/normal/18819.jpeg" alt="" width="50%" height="50%" style="background:none; border:none; box-shadow:none;"/>
+<img src="static/img/marketshare.png" alt="" width="50%" height="50%" style="background:none; border:none; box-shadow:none;"/>
 
 <!--v-->
 
-![france](https://i2.wp.com/datacenter-magazine.fr/contenus/uploads/2020/03/CORE_MARKESS_PRG_OPE_19-20_COMPETITIVE_ENVIRONMENT_PRESSE_MARS-2020.png?resize=600%2C340&ssl=1)
+![france](https://www.larevuedudigital.com/wp-content/uploads/2022/05/Parts-de-marche-Cloud-2021-2-BFXX.jpg)
+
+https://www.larevuedudigital.com/le-marche-du-cloud-concentre-en-france-entre-amazon-microsoft-et-google/
 
 <!--s-->
 

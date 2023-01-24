@@ -219,9 +219,3 @@ but you will "deal with" cloud computing one way or another !
 - What do I use ?
 - Why do I use it ?
 - How do I do ?
-
-<!--v-->
-
-#### Quick demo
-
-How I use the cloud in my daily job

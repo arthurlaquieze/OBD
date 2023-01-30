@@ -675,7 +675,9 @@ However, it requires naming the image in a specific fashion: `eu.gcr.io/${PROJEC
 
 * Go to container registry https://console.cloud.google.com/gcr, you should see your docker image :)
 
-## 5. Data Science Standardized Environment and mounting volumes
+## 5. Bonus - Data Science Standardized Environment and mounting volumes
+
+Note : This may not run in your native github codespace due to the storage available. If you encounter a storage error, run `docker system prune` to cleanup everything
 
 ### 5.1 Intro
 
@@ -689,11 +691,17 @@ The benefits of this workflow are that we can:
 * Spin up a container to onboard new employees
 * Build an automated testing pipeline to confirm upgrade dependencies do not break code
 
-### 5.2 Kaggle Docker Image
+### 5.2 Jupyter Stack Docker Image
 
-For this exercise we will use [Kaggle Docker Image](https://medium.com/@kaggleteam/how-to-get-started-with-data-science-in-containers-6ed48cb08266) which is a fully configured docker image that can be used as a data science container
+For this exercise we will use [Jupyter Stack Docker Image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/running.html#) which is a fully configured docker image that can be used as a data science container
 
-Take a look at the documentation and [the repository](https://github.com/Kaggle/docker-python)
+Take a look at the documentation and [the dockerhub repository](https://hub.docker.com/r/jupyter/scipy-notebook/tags/)
+
+To get the docker image, run
+
+```bash
+docker pull jupyter/scipy-notebook:lab-3.5.3
+```
 
 ### 5.3 Get the algorithm in ML git in your Virtual Machine
 
@@ -707,14 +715,13 @@ We will also need to make available the notebooks on the VM to the container... 
 
 ```bash
 docker run --rm -it \
-  -p 8888:8080 \
-  -v /home/${USER}/MLclass:/home/Mlclass \
-  --workdir /home/ \
-  gcr.io/kaggle-images/python \
-  /bin/bash /run_jupyter.sh
+  -p 8888:8888 \
+  -v /home/${USER}/MLclass:/home/jovyan/work/MLClass \
+  --workdir /home/jovyan/work \
+  jupyter/scipy-notebook:lab-3.5.3
 ```
 
-Note: this image is very large, delete it afterwards using `docker rmi`
+Note: this image is large, delete it afterwards using `docker rmi`
 
 Options breakdown:
 
@@ -725,7 +732,7 @@ Options breakdown:
 
 You should now see a jupyter lab with mlclass accessible if you do another port mapping
 
-So to connect to the jupyter lab we mapped the ports local 8888 to vm 8888 and vm 8888 to docker 8080
+So to connect to the jupyter lab we mapped the ports local 8888 to vm 8888 and vm 8888 to docker 8888
 
 We also exposed the local disk to the container
 

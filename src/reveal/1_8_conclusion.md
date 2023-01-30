@@ -185,15 +185,22 @@ https://docs.github.com/en/codespaces/overview
 
 <!--v-->
 
+[Docker](https://www.docker.com/)
+
+![](https://pointful.github.io/docker-intro/docker-img/docker.png)
+
+<!--v-->
+
 ![shipping](https://pointful.github.io/docker-intro/docker-img/shipping-container-for-code.png)
 
 <!--v-->
 
-![docker](https://image.slidesharecdn.com/docker101november2016-161205192653/95/docker-101-nov-2016-13-638.jpg)
+![docker](static/img/buildshiprun.png)
+
 
 <!--v-->
 
-![docker](https://www.docker.com/sites/default/files/d8/2018-11/docker-containerized-and-vm-transparent-bg.png)
+![](https://pointful.github.io/docker-intro/docker-img/containers-vs-vms.png)
 
 <!--v-->
 
@@ -267,6 +274,11 @@ It tries to answer the following questions
 Kubernetes is **one** of the solutions (the hardest) available to you
 
 Read this [comic](https://cloud.google.com/kubernetes-engine/kubernetes-comic/) 
+
+<!--v-->
+
+https://huyenchip.com/2021/09/13/data-science-infrastructure.html
+
 
 <!--s-->
 

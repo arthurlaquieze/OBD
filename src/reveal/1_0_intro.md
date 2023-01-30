@@ -15,8 +15,6 @@ revealOptions:
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/120106-G-IA651-272_%286668116881%29.jpg" alt="" width="40%" height="40%" style="background:none; border:none; box-shadow:none;"/>
 
-https://ahaslides.com/OBD231
-
 <!--v-->
 
 ## Cloud Computing, Containers & Orchestration

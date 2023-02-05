@@ -15,7 +15,7 @@ revealOptions:
 
 This class
 
-- **Intro to cloud for ML**
+- **Cloud Computing & Docker applied to AI**
 - **Intro to MLOps**
 - **Hands on : Deploy your model in production**
 

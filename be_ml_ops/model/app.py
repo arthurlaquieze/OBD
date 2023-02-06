@@ -30,29 +30,32 @@ class Result(BaseModel):
     model: str
 
 
-# !!!! FILL ME
-def parse_predictions(prediction: np.ndarray, classes: [str]) -> List[Detection]:
+def parse_predictions(prediction: np.ndarray, classes: list[str]) -> List[Detection]:
     detections = []
 
     for pred in prediction:
         detections.append(
             Detection(
-                int(pred[0]),
-                int(pred[1]),
-                int(pred[2]),
-                int(pred[3]),
-                classes[int(pred[5])],
-                round(float(pred[4], 3)),
+                x_min=int(pred[0]),
+                y_min=int(pred[1]),
+                x_max=int(pred[2]),
+                y_max=int(pred[3]),
+                class_name=classes[int(pred[5])],
+                confidence=round(float(pred[4], 3)),
             )
         )
 
     return detections
 
 
-# !!!! FILL ME
 def load_model(model_name: str):
     """"""
-    raise NotImplementedError
+    # Load model from torch
+    model = torch.hub.load("ultralytics/yolov5", model_name, pretrained=True)
+
+    # Evaluation mode + Non maximum threshold
+    model.eval()
+    return model
 
 
 MODEL_NAMES = ["yolov5s", "yolov5m", "yolov5l"]
@@ -65,11 +68,10 @@ app = FastAPI(
     version="1.0",
 )
 
-# !!!! FILL ME
 # This is a dictionnary that must contains a model for each key (model names), fill load model
 # example: for model_name in MODEL_NAMES: MODELS[model_name] = load_model(model_name)
 # You can also lazily load models only when they are called to avoid holding 3 models in memory
-MODELS = ...
+MODELS = {model_name: load_model(model_name) for model_name in MODEL_NAMES}
 
 
 @app.get(
@@ -105,7 +107,7 @@ def health() -> str:
     response_description="FILL ME",
     response_model=List[str],
 )
-def models() -> [str]:
+def models() -> list[str]:
     return MODEL_NAMES
 
 
@@ -143,15 +145,17 @@ def predict(inputs: Input) -> Result:
     # Inference
 
     # RUN THE PREDICTION, TIME IT
-    predictions = ...
+    t0 = time.time()
+    predictions = model(image)
+    t1 = time.time()
 
     # Post processing
     classes = predictions.names
     predictions = predictions.xyxy[0].numpy()
 
     # Create a list of [DETECTIONS] objects that match the detection class above, using the parse_predictions method
-    detections = ...
+    detections = parse_predictions(predictions, classes)
 
-    result = Result(detections=..., time=..., model=...)
+    result = Result(detections=detections, time=round(t1 - t0, 3), model=model_name)
 
     return result

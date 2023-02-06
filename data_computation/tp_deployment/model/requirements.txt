@@ -22,5 +22,7 @@ pillow
 seaborn
 scipy
 tqdm
+ipython
+psutil
 
 # Your requirements

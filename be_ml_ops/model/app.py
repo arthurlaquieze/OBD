@@ -30,7 +30,7 @@ class Result(BaseModel):
     model: str
 
 
-def parse_predictions(prediction: np.ndarray, classes: list[str]) -> List[Detection]:
+def parse_predictions(prediction: np.ndarray, classes: List[str]) -> List[Detection]:
     detections = []
 
     for pred in prediction:
@@ -41,7 +41,7 @@ def parse_predictions(prediction: np.ndarray, classes: list[str]) -> List[Detect
                 x_max=int(pred[2]),
                 y_max=int(pred[3]),
                 class_name=classes[int(pred[5])],
-                confidence=round(float(pred[4], 3)),
+                confidence=round(float(pred[4]), 3),
             )
         )
 
@@ -107,7 +107,7 @@ def health() -> str:
     response_description="FILL ME",
     response_model=List[str],
 )
-def models() -> list[str]:
+def models() -> List[str]:
     return MODEL_NAMES
 
 

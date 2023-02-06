@@ -37,8 +37,8 @@ nav:
   - Google Cloud and Docker BE: 1_4_be.md
   - Deployment & Orchestration:
     - Lectures: 1_5_deployment.md
-    - TP - Deployment: 1_5_deployment_tp.md
-    - TP (at home) - Kubenertes Intro: 1_5_kub_intro.md
+    - TP - Your ML model into production: 1_5_deployment_tp.md
+    - TP - Intro to k8s: 1_5_kub_intro.md
   - Conclusion: 1_6_conclusion.md
   - Reading List: 1_7_readings.md
 - Data Distribution:

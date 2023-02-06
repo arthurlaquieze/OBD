@@ -5,7 +5,7 @@
 
 ## Syllabus
 
-### [Introduction](slides/1_0_intro.html)
+### [Introduction](slides/1_1_intro.html)
 
 Introduction to data computation module
 

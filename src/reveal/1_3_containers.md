@@ -13,17 +13,11 @@ revealOptions:
     height: '100%'
 ---
 
-![icebreaker](https://i.imgur.com/wLSuwQQ.gif)
-
-https://ahaslides.com/OBD212
-
-<!--v-->
-
 ## From Virtualisation to Containerisation
 
 ![](static/img/docker_meme.png)
 
-<!--s-->
+<!--v-->
 
 ### Outline
 
@@ -45,7 +39,7 @@ https://ahaslides.com/OBD212
 
 ### The need for Containers in software
 
-![](https://miro.medium.com/max/400/1*qY9Mmc2k_agwALr2UGY-8g.png)
+![](static/img/meme.png)
 
 <!--v-->
 
@@ -83,11 +77,11 @@ https://ahaslides.com/OBD212
 
 <!--v-->
 
-![](https://image.slidesharecdn.com/docker101november2016-161205192653/95/docker-101-nov-2016-13-638.jpg) <!-- .element: height="60%" width="60%" -->
+![docker](static/img/buildshiprun.png) <!-- .element: height="60%" width="60%" -->
 
 <!--s-->
 
-![](https://www.docker.com/sites/default/files/social/docker_facebook_share.png)
+![](https://pointful.github.io/docker-intro/docker-img/docker.png)
 
 <!--v-->
 
@@ -127,7 +121,7 @@ Docker is some fancy tech over linux kernel capabilities (containers)
 
 But Docker is available on [Windows and MacOS](https://www.docker.com/products/docker-desktop) !
 
-![desktop](https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2020-01/DesktopAction%402.png?itok=fSjduwO7)
+![desktop](https://www.docker.com/wp-content/uploads/2021/10/List-plus-running-compose.png) <!-- .element: height="50%" width="50%" -->
 
 <!--v-->
 
@@ -158,13 +152,19 @@ https://www.youtube.com/c/AurelieVache/videos
 
 #### Container vs Virtual Machine
 
-![](https://www.docker.com/sites/default/files/d8/2018-11/docker-containerized-and-vm-transparent-bg.png)
+![](https://pointful.github.io/docker-intro/docker-img/containers-vs-vms.png)
+
+<!--v-->
+
+#### Why are docker containers lightweight ?
+
+![](https://pointful.github.io/docker-intro/docker-img/why-are-containers-lightwight.png)
 
 <!--v-->
 
 #### Container vs Virtual Machine, an Analogy
 
-![](http://www.lukewilson.net/images/2017/02/apartment-house.png)
+![](https://www.dotnetcurry.com/images/azure/kubernetes/app-deployment-analogy.jpg)
 
 <!--v-->
 
@@ -192,7 +192,7 @@ https://www.youtube.com/c/AurelieVache/videos
 
 #### Multiple People
 
-![people](https://img.pngio.com/viewpoint-how-should-i-structure-my-data-science-team-science-teams-png-700_500.png)
+![people](https://i.pinimg.com/736x/8d/f1/bf/8df1bf6ae24e8b2fda7714f3bf3ccfff.jpg)
 
 <!--v-->
 
@@ -350,7 +350,7 @@ docker run my-image
 * Multi-containers application with networking (communication)
 * "Glue" for complex applications and microservices
 
-![compose](https://lh3.googleusercontent.com/efcq_xUhGpF1Guqb5daiybmhMQL9Q_KzMtpmddPB2en0vrJzYlPqI1CAc3KDSjFSiBJApBYPfnmwlyrRAtzpIzHrDdpO-XhnWEmYKk4MP20zyq708-pvIxl-6MNbQACxe5nlwi2G)
+![compose](https://www.biaudelle.fr/wp-content/uploads/2021/07/docker-compose-archi.png)
 
 <!--v-->
 
@@ -380,15 +380,7 @@ services:
 
 #### REMEMBER THIS !!!
 
-![](static/img/docker-jworkflow.jpg)
-
-<!--v-->
-
-#### Next week
-
-* Microservices, communication between containers using HTTP (REST)
-* Container management and orchestration
-* Kubernetes
+![docker](static/img/buildshiprun.png)
 
 <!--s-->
 

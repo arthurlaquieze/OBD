@@ -6,7 +6,8 @@ Your first ML model in production !
 
 - A model behind a Restful API, packaged in a docker
 - A frontend using streamlit, packaged in a docker
-- Deploy it on Google Cloud Platform using GCE & docker-compose
+- Deploy a multi-container application using docker compose
+- Deploy the model in the docker image
 - Send it to your friends !
 
 Regardons [ce notebook](https://colab.research.google.com/drive/1YnJVW-IbMkUhl7s5nJ7BsT5tsTTvMmUB?usp=sharing)
@@ -24,50 +25,49 @@ L'objectif est de convertir ce notebook en deux applications :
 - L'une qui "sert" les prédictions d'un modèle (le serveur)
 - L'une qui permet à un utilisateur d'interagir facilement avec le modèle en mettant en ligne sa propre image (le "client")
 
-Puis de les déployer sur une instance GCP
+Nous allons développer tout cela dans l'environnement de développement (codespaces)
+
+Puis déployer le modèle dans l'environnement GCP
 
 ## Team Composition
 
 C'est mieux d'être en binôme pour s'entraider :)
 
-## How to run this
+## Configuration du codespace
 
-Commençons par créer une instance GCP bien configurée depuis laquelle se connecter:
+Nous allons utiliser github codespaces comme environnement de développement,
 
-```bash
-export INSTANCE_NAME="tp-deployment-{yourgroup}-{yourname}" # Don't forget to replace values !
-```
+Repartir de [https://github.com/github/codespaces-blank](https://github.com/github/codespaces-blank)
 
-```bash
-gcloud compute instances create $INSTANCE_NAME \
-        --zone="europe-west4-a" \
-        --machine-type="n1-standard-1" \
-        --image-family="common-cpu" \
-        --image-project="deeplearning-platform-release" \
-        --maintenance-policy=TERMINATE \
-        --scopes="storage-rw" \
-        --boot-disk-size=75GB
-```
+Puis configurer ce codespace avec le google cloud sdk et configurer le projet `isae-sdd`
 
-Récuperez l'ip publique de la machine (via l'interface google cloud ou bien en faisant `gcloud compute instances list | grep {votre instance}` et notez là bien
+!!! hint
+    ```bash
+    # Rappels : Installation du google cloud sdk
+    # https://cloud.google.com/sdk/docs/install#linux
+    curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-416.0.0-linux-x86_64.tar.gz
+    tar -xf google-cloud-cli-416.0.0-linux-x86.tar.gz
+    ./google-cloud-sdk/install.sh
+    # Type yes to add to path !
+    export PATH=./google-cloud-sdk/bin:$PATH
+    gcloud init
+    # login and copy the token
+    # configure isae-sdd then compute zone 17
+    gcloud auth configure-docker
+    ```
 
-Depuis le [google cloud shell](shell.cloud.google.com) - ou depuis votre machine si vous avez google cloud sdk d'installé localement et que vous êtes sous eduroam,
+Voir les tps précédents
 
-```bash
-    gcloud compute ssh {user}@{instance} -- \
-        -L 8080:localhost:8080 \
-        -L 8080:localhost:8080
-```
-
-Vous pouvez ensuite aller sur localhost:8080 (install locale) ou faire un web preview depuis cloud shell sur le port 8080 de cloud shell,
-
-Vous devriez être dans un jupyter lab
-
-Maintenant, depuis ce jupyter lab, ouvrez un terminal et récupérez les fichiers suivants :
+Maintenant, depuis ce codespace, ouvrez un terminal et récupérez les fichiers suivants :
 
 ```bash
 gsutil cp -r gs://fchouteau-isae-cloud/deployment/* .
 ```
+
+!!! hint
+
+    Si vous tombez à court de stockage dans le TP, lancez `docker system prune` pour nettoyer le cache docker
+
 
 ## 1 - Converting a prediction notebook into a webapplication
 
@@ -81,15 +81,13 @@ Le modèle: Un détecteur d'objets sur des photographies "standard" supposé mar
 
 ![image](slides/static/img/cats_yolo.jpg)
 
-Le papier vaut la lecture
+Remarque : Le papier vaut la lecture [https://pjreddie.com/media/files/papers/YOLOv3.pdf](https://pjreddie.com/media/files/papers/YOLOv3.pdf)
 
-https://pjreddie.com/media/files/papers/YOLOv3.pdf
+On récupère la version disponible sur torchhub [https://pytorch.org/hub/ultralytics_yolov5/](https://pytorch.org/hub/ultralytics_yolov5/) qui correspond au repository suivant [https://github.com/ultralytics/yolov5](https://github.com/ultralytics/yolov5)
 
-On récupère la version disponible sur torchhub https://pytorch.org/hub/ultralytics_yolov5/ qui correspond à ceci https://github.com/ultralytics/yolov5
+Voici une petite explication de l'historique de YOLO [https://medium.com/towards-artificial-intelligence/yolo-v5-is-here-custom-object-detection-tutorial-with-yolo-v5-12666ee1774e](https://medium.com/towards-artificial-intelligence/yolo-v5-is-here-custom-object-detection-tutorial-with-yolo-v5-12666ee1774e)
 
-Voici une petite explication de l'historique https://medium.com/towards-artificial-intelligence/yolo-v5-is-here-custom-object-detection-tutorial-with-yolo-v5-12666ee1774e
-
-On se propose ici de wrapper 3 versions du modèle (S,M,L) qui sont 3 versions +/- complexes du modèle YOLO-V5, afin de pouvoir comparer les performances et les résultats
+On se propose ici d'encapsuler 3 versions du modèle (S,M,L) qui sont 3 versions +/- complexes du modèle YOLO-V5, afin de pouvoir comparer les performances et les résultats
 
 ![models](https://user-images.githubusercontent.com/26833433/97808084-edfcb100-1c64-11eb-83eb-ffed43a0859f.png)
 
@@ -252,8 +250,6 @@ Il y a deux fonctions à compléter en s'inspirant du notebook `inference.ipynb`
 
 La première prend un tableau de type (left, top, right, bottom, confidence, class_index) et une liste de noms de classes et créée une liste d'objets `Detection` (voir le code pour la création des objets détection)
 
-La seconde fonction doit charger un modèle via torchhub en fonction de son nom (voir le docker)
-
 ```python
 # !!!! FILL ME
 def parse_predictions(predictions: np.ndarray, classes: [str]) -> List[Detection]:
@@ -275,6 +271,8 @@ def parse_predictions(predictions: np.ndarray, classes: [str]) -> List[Detection
     return detection
     ```
 
+La seconde fonction doit charger un modèle via torchhub en fonction de son nom (voir le docker)
+
 ```python
 # !!!! FILL ME
 def load_model(model_name: str):
@@ -283,12 +281,13 @@ def load_model(model_name: str):
 ```
 
 ??? hint
+
     ```python
     def load_model(model_name: str) -> Dict:
-    # Load model from torch
-    model = torch.hub.load("ultralytics/yolov5", model_name, pretrained=True)
-    # Evaluation mode + Non maximum threshold
-    model = model.eval()
+        # Load model from torch
+        model = torch.hub.load("ultralytics/yolov5", model_name, pretrained=True)
+        # Evaluation mode + Non maximum threshold
+        model = model.eval()
 
     return model
     ```
@@ -321,11 +320,22 @@ Le résultat de predictions est un tableau numpy composé des colonnes `left, to
 Il s'agit ensuite de transformer ces predictions en `[Detection]`
 
 ```python
+class Detection(BaseModel):
+    x_min: int
+    y_min: int
+    x_max: int
+    y_max: int
+    class_name: str
+    confidence: float
+```
+
+```python
 # Create a list of [DETECTIONS] objects that match the detection class above, using the parse_predictions method
 detections = parse_predictions(predictions, classes)
 ```
 
 ??? hint
+
     ```python
     # Inference
     t0 = time.time()
@@ -521,7 +531,7 @@ Essayez quelques routes :
 
 ```bash
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_ID}/{your-name}-{your app name}:{your version}
+docker push eu.gcr.io/${PROJECT_ID}/{your-name}-model:{your version}
 ```
 
 Si vous devez mettre à jour le docker, il faut incrémenter la version pour le déploiement
@@ -1050,7 +1060,8 @@ Utilisation (exemple)
 
     ```
 
-!!! note:
+!!! note
+
     Le test mode servait pour un ancien BE. Si vous avez tout fait dans l'ordre vous ne devriez pas en avoir besoin
 
 ### Construire le docker
@@ -1061,6 +1072,10 @@ docker build -t eu.gcr.io/${PROJECT_ID}/{your app name}:{your version} -f Docker
 ```
 
 ### Tester le docker
+
+!!! warning
+
+    Ne fonctionne pas sur codespace
 
 Au lieu de faire `streamlit run app.py`, vous pouvez lancer le docker localement et aller sur {ip}:8501 pour tester le docker
 
@@ -1077,7 +1092,7 @@ Indiquez l'ip de la machine port 8000 à gauche
 
 ```bash
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_ID}/{your app name}:{your version}
+docker push eu.gcr.io/${PROJECT_ID}/{your-name}-frontend:{your version}
 ```
 
 ### Liens Utiles
@@ -1085,6 +1100,10 @@ docker push eu.gcr.io/${PROJECT_ID}/{your app name}:{your version}
 - [Doc Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)
 
 ## 3 - Running two dockers in parallel using docker-compose
+
+!!! warning
+
+    Ne fonctionne pas sur codespace
 
 On va utiliser `docker compose` pour lancer les deux applications en simultané de sorte à ce qu'elles communiquent
 
@@ -1128,6 +1147,47 @@ Normalement:
 - le service de modèle est accessible sur le port 8000 de la machine
 - le service streamlit est accessible sur le port 8501 de la machine
 - vous devez indiquer l'hostname "yolo" pour communiquer entre streamlit et le modèle. En effet, les services sont accessibles via un réseau spécial "local" entre tous les containers lancés via docker-compose
+
+## 4 - Déployer le modèle et l'UX sur deux instances GCP
+
+!!! warning
+
+    A mettre à jour en séance
+
+#### 4.2 Create the VM
+
+Nous allons directement créer une machine avec le container du modèle déjà lancé
+
+Commençons par créer une instance GCP bien configurée depuis laquelle se connecter:
+
+```bash
+export INSTANCE_NAME="tp-deployment-{yourgroup}-{yourname}" # Don't forget to replace values !
+```
+
+```bash
+gcloud compute instances create $INSTANCE_NAME \
+        --zone="europe-west4-a" \
+        --machine-type="n1-standard-1" \
+        --image-family="common-cpu" \
+        --image-project="deeplearning-platform-release" \
+        --maintenance-policy=TERMINATE \
+        --scopes="storage-rw" \
+        --boot-disk-size=75GB
+```
+
+Récuperez l'ip publique de la machine (via l'interface google cloud ou bien en faisant `gcloud compute instances list | grep {votre instance}` et notez là bien
+
+Depuis le [google cloud shell](shell.cloud.google.com) - ou depuis votre machine si vous avez google cloud sdk d'installé localement et que vous êtes sous eduroam,
+
+```bash
+    gcloud compute ssh {user}@{instance} -- \
+        -L 8080:localhost:8080 \
+        -L 8080:localhost:8080
+```
+
+Vous pouvez ensuite aller sur localhost:8080 (install locale) ou faire un web preview depuis cloud shell sur le port 8080 de cloud shell,
+
+Vous devriez être dans un jupyter lab
 
 ## Conclusion
 

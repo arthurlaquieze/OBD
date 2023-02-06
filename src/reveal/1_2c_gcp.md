@@ -175,7 +175,7 @@ We usually connect to web app using `http://{ip}:{port}`
 * Some of you did Local Machine --(ssh via web)--> Google Cloud Shell --(ssh)--> VM
 * We basically use the cloud shell (connection via web) to bypass the network restriction, then connect to SSH
 
-![tunnelception](static/img/tunnelception2.png)
+![tunnelception](static/img/tunnelception.png)
 
 <!--v-->
 

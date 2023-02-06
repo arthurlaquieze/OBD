@@ -272,11 +272,12 @@ Here we will discover google cloud storage, upload some files from your computer
 
 * Use [this tutorial](https://cloud.google.com/storage/docs/discover-object-storage-console) to upload something from your computer to google cloud storage from the web browser (**DO NOT DELETE THE FILES YET**)
 
-Now we will download it using the google cloud CLI tool,
+Now we will download it using the google cloud CLI tool. Here's [the documentation](https://cloud.google.com/storage/docs/uploading-objects#gsutil)
 
-* Here's [the documentation](https://cloud.google.com/storage/docs/uploading-objects#gsutil)
+Follow the [tutorial](https://cloud.google.com/storage/docs/discover-object-storage-gsutil) to learn how to do what you did with `gsutil`
+
 * List the content of the bucket you just created (if you deleted it previously, create a new one)
-* Upload a file to a bucket
+* Upload a file to a bucket 
 * Download a file from a bucket
 
 **What if we want to do the same from the VM ?**

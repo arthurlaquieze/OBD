@@ -10,4 +10,4 @@ COPY .streamlit /app/
 EXPOSE 8501
 WORKDIR /app
 
-CMD ["streamlit", "run", "app.py"]
+CMD ["streamlit", "run", "app.py", "--server.enableWebsocketCompression=false", "--server.enableXsrfProtection=false", " --server.enableCORS=false"]

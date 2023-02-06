@@ -6,7 +6,8 @@ Your first ML model in production !
 
 - A model behind a Restful API, packaged in a docker
 - A frontend using streamlit, packaged in a docker
-- Deploy it on Google Cloud Platform using GCE & docker-compose
+- Deploy a multi-container application using docker compose
+- Deploy the model in the docker image
 - Send it to your friends !
 
 Regardons [ce notebook](https://colab.research.google.com/drive/1YnJVW-IbMkUhl7s5nJ7BsT5tsTTvMmUB?usp=sharing)
@@ -32,36 +33,18 @@ C'est mieux d'être en binôme pour s'entraider :)
 
 ## How to run this
 
-Commençons par créer une instance GCP bien configurée depuis laquelle se connecter:
+The best way to run this BE is to setup a Github Codespace VM and install the google cloud sdk. Refer to the previous [TP](1_2_gcp_handson.html) to learn more
 
-```bash
-export INSTANCE_NAME="tp-deployment-{yourgroup}-{yourname}" # Don't forget to replace values !
-```
+We will be using the `gcloud` CLI for the following:
 
-```bash
-gcloud compute instances create $INSTANCE_NAME \
-        --zone="europe-west4-a" \
-        --machine-type="n1-standard-1" \
-        --image-family="common-cpu" \
-        --image-project="deeplearning-platform-release" \
-        --maintenance-policy=TERMINATE \
-        --scopes="storage-rw" \
-        --boot-disk-size=75GB
-```
+* Create a GCE Virtual Machine
+* Connect to SSH with port forwarding to said machine
 
-Récuperez l'ip publique de la machine (via l'interface google cloud ou bien en faisant `gcloud compute instances list | grep {votre instance}` et notez là bien
+For the rest of this walkthrough, if it is written "from your local machine", this will be "github codespace"
 
-Depuis le [google cloud shell](shell.cloud.google.com) - ou depuis votre machine si vous avez google cloud sdk d'installé localement et que vous êtes sous eduroam,
+If it is written "inside the VM", this means that you should run it inside the GCE VM that you have to run the SSH tunnel first...
 
-```bash
-    gcloud compute ssh {user}@{instance} -- \
-        -L 8080:localhost:8080 \
-        -L 8080:localhost:8080
-```
-
-Vous pouvez ensuite aller sur localhost:8080 (install locale) ou faire un web preview depuis cloud shell sur le port 8080 de cloud shell,
-
-Vous devriez être dans un jupyter lab
+🙏🏻 Use Google Chrome without any ad blockers if you have any issues
 
 Maintenant, depuis ce jupyter lab, ouvrez un terminal et récupérez les fichiers suivants :
 
@@ -81,15 +64,13 @@ Le modèle: Un détecteur d'objets sur des photographies "standard" supposé mar
 
 ![image](slides/static/img/cats_yolo.jpg)
 
-Le papier vaut la lecture
+Remarque : Le papier vaut la lecture [https://pjreddie.com/media/files/papers/YOLOv3.pdf](https://pjreddie.com/media/files/papers/YOLOv3.pdf)
 
-https://pjreddie.com/media/files/papers/YOLOv3.pdf
+On récupère la version disponible sur torchhub [https://pytorch.org/hub/ultralytics_yolov5/](https://pytorch.org/hub/ultralytics_yolov5/) qui correspond au repository suivant [https://github.com/ultralytics/yolov5](https://github.com/ultralytics/yolov5)
 
-On récupère la version disponible sur torchhub https://pytorch.org/hub/ultralytics_yolov5/ qui correspond à ceci https://github.com/ultralytics/yolov5
+Voici une petite explication de l'historique de YOLO [https://medium.com/towards-artificial-intelligence/yolo-v5-is-here-custom-object-detection-tutorial-with-yolo-v5-12666ee1774e](https://medium.com/towards-artificial-intelligence/yolo-v5-is-here-custom-object-detection-tutorial-with-yolo-v5-12666ee1774e)
 
-Voici une petite explication de l'historique https://medium.com/towards-artificial-intelligence/yolo-v5-is-here-custom-object-detection-tutorial-with-yolo-v5-12666ee1774e
-
-On se propose ici de wrapper 3 versions du modèle (S,M,L) qui sont 3 versions +/- complexes du modèle YOLO-V5, afin de pouvoir comparer les performances et les résultats
+On se propose ici d'encapsuler 3 versions du modèle (S,M,L) qui sont 3 versions +/- complexes du modèle YOLO-V5, afin de pouvoir comparer les performances et les résultats
 
 ![models](https://user-images.githubusercontent.com/26833433/97808084-edfcb100-1c64-11eb-83eb-ffed43a0859f.png)
 
@@ -521,7 +502,7 @@ Essayez quelques routes :
 
 ```bash
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_ID}/{your-name}-{your app name}:{your version}
+docker push eu.gcr.io/${PROJECT_ID}/{your-name}-model:{your version}
 ```
 
 Si vous devez mettre à jour le docker, il faut incrémenter la version pour le déploiement
@@ -1077,7 +1058,7 @@ Indiquez l'ip de la machine port 8000 à gauche
 
 ```bash
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_ID}/{your app name}:{your version}
+docker push eu.gcr.io/${PROJECT_ID}/{your-name}-frontend:{your version}
 ```
 
 ### Liens Utiles
@@ -1128,6 +1109,50 @@ Normalement:
 - le service de modèle est accessible sur le port 8000 de la machine
 - le service streamlit est accessible sur le port 8501 de la machine
 - vous devez indiquer l'hostname "yolo" pour communiquer entre streamlit et le modèle. En effet, les services sont accessibles via un réseau spécial "local" entre tous les containers lancés via docker-compose
+
+## 3 - Déployer le modèle sur une instance GCP
+
+
+#### 3.1 Push the container image to the docker registry
+
+
+#### 3.2 Create the VM
+
+Nous allons directement créer une machine avec le container du modèle déjà lancé
+
+Commençons par créer une instance GCP bien configurée depuis laquelle se connecter:
+
+```bash
+export INSTANCE_NAME="tp-deployment-{yourgroup}-{yourname}" # Don't forget to replace values !
+```
+
+```bash
+gcloud compute instances create $INSTANCE_NAME \
+        --zone="europe-west4-a" \
+        --machine-type="n1-standard-1" \
+        --image-family="common-cpu" \
+        --image-project="deeplearning-platform-release" \
+        --maintenance-policy=TERMINATE \
+        --scopes="storage-rw" \
+        --boot-disk-size=75GB
+```
+
+Récuperez l'ip publique de la machine (via l'interface google cloud ou bien en faisant `gcloud compute instances list | grep {votre instance}` et notez là bien
+
+Depuis le [google cloud shell](shell.cloud.google.com) - ou depuis votre machine si vous avez google cloud sdk d'installé localement et que vous êtes sous eduroam,
+
+```bash
+    gcloud compute ssh {user}@{instance} -- \
+        -L 8080:localhost:8080 \
+        -L 8080:localhost:8080
+```
+
+Vous pouvez ensuite aller sur localhost:8080 (install locale) ou faire un web preview depuis cloud shell sur le port 8080 de cloud shell,
+
+Vous devriez être dans un jupyter lab
+
+#### 3.3 Demo : Autoscaling
+
 
 ## Conclusion
 

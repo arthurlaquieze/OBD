@@ -15,15 +15,13 @@ revealOptions:
 
 This class
 
+- **Quick notions about MLOPS**
 - **Cloud Computing & Docker applied to AI**
-- **Intro to MLOps**
 - **Hands on : Deploy your model in production**
 
 <!--s-->
 
-## Intro to MLOps / ML Systems Design
-
-![mlops](https://radiant.digital/wp-content/uploads/2021/02/MLOps_2-1024x677.png) <!-- .element: height="50%" width="50%" -->
+## Very quick intro to MLOps
 
 <!--v-->
 
@@ -31,7 +29,17 @@ This class
 
 <!--v-->
 
+![mlops](static/img/mlops_lifecycle.png)  <!-- .element: height="50%" width="50%" -->
+
+<!--v-->
+
 ![mlops](https://ml-ops.org/img/mlops-loop-en.jpg) <!-- .element: height="50%" width="50%" -->
+
+<!--v-->
+
+### Layers of "enabling technology"
+
+![mlops](static/img/mlopsinfra.png) <!-- .element: height="75%" width="75%" -->
 
 <!--v-->
 
@@ -40,11 +48,113 @@ This class
 
 <!--s-->
 
+## Cloud Computing & AI
+
+<!--v-->
+
+### My usage : Flexibility
+
+![gcp](static/img/infra_army_of_one.png)
+
+<!--v-->
+
+### A full workflow 
+
+![vertex](https://www.royalcyber.com/blog/wp-content/uploads/2022/05/end-to-end-mlops-on-vertex-ai.png)
+
+<!--v-->
+
+### All about that scale
+
+[BLOOM: A 176B-Parameter Open-Access Multilingual Language Model](https://arxiv.org/pdf/2211.05100)
+
+> Training BLOOM took about 3.5 months to complete and consumed 1,082,990 compute hours. Training was conducted on 48 nodes, each having 8 NVIDIA A100 80GB GPUs (a total of 384 GPUs);
+
+<!--v-->
+
+### AI Distributed Computing
+
+![](static/img/distributed_computing.png)
+
+<!--v-->
+
+### Stable Diffusion
+
+![](https://assets-global.website-files.com/61fd4eb76a8d78bc0676b47d/63cf7cb6264c4050ed2ea00e_Screen%20Shot%202023-01-23%20at%2010.37.19%20PM.png) <!-- .element: height="60%" width="60%" -->
+
+[Stable Diffusion Training Times](https://www.mosaicml.com/blog/training-stable-diffusion-from-scratch-costs-160k)
+
+<!--v--> 
+
+### AI Cloud Providers
+
+![](https://geekflare.com/wp-content/uploads/2021/08/lambdagpu-1.jpg)  <!-- .element: height="50%" width="50%" -->
+
+<!--v-->
+
+### The need for tech
+
+![](static/img/anyscale.png)  <!-- .element: height="50%" width="50%" -->
+
+And dask !
+
+<!--s-->
+
+## Containers & AI
+
+<!--v-->
+
+#### Data Science is about reproducibility
+
+* Experimental science
+* Communicating results
+* Hands-out to other teams
+* Deployment and versioning of models
+
+<!--v-->
+
+#### So... containers ?
+
+* ... for standardized development environments
+* ... dependency management
+* ... for complex / large scale workflows
+* ... for deployment
+
+~it works on my notebook !~ *here's the model ready to run !*
+
+<!--v-->
+
+Reproducible development environment
+
+![](https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://godatadriven.com/wp-content/uploads/2022/10/devcontainer-overview-4.png)  <!-- .element: height="55%" width="55%" -->
+
+<!--v-->
+
+Reproducible development environment [at scale](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6) !
+
+![netflix](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*WOEEJizYnO8ibtU2l9jWbA.jpeg)
+
+<!--v-->
+
+[Netflix and notebook scheduling](https://medium.com/netflix-techblog/scheduling-notebooks-348e6c14cfd6)
+
+![netflix](https://miro.medium.com/v2/resize:fit:1400/0*058TIxB_YEFxmUDy)  <!-- .element: height="55%" width="55%" -->
+
+<!--v-->
+
+https://www.kubeflow.org/
+
+![kubeflow](https://miro.medium.com/max/2446/1*ZQsFV3o1c3Amu26Z-IEd7w.png) <!-- .element: height="55%" width="55%" -->
+
+<!--s-->
+
 ## Intro to deployment
 
 <!--v-->
 
 ### Architecturing (web) applications
+
+![](https://axisbits.com/storage/app/uploads/public/7da/cc4/ec1/7dacc4ec1c9bc16b7aa58185cb8efa5a.png)
 
 <!--v-->
 

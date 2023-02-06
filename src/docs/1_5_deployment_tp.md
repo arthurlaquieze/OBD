@@ -1075,7 +1075,8 @@ docker build -t eu.gcr.io/${PROJECT_ID}/{your app name}:{your version} -f Docker
 
 !!! warning
 
-    Ne fonctionne pas sur codespace
+    Malheureusement, sur github codespace cela ne semble pas fonctionner. Nous allons devoir partir du principe que cela fonctionne du premier coup !
+    Le mieux est donc de s'assurer que le app.py correspond à la correction puis de passer à la section suivante
 
 Au lieu de faire `streamlit run app.py`, vous pouvez lancer le docker localement et aller sur {ip}:8501 pour tester le docker
 
@@ -1099,11 +1100,46 @@ docker push eu.gcr.io/${PROJECT_ID}/{your-name}-frontend:{your version}
 
 - [Doc Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)
 
-## 3 - Running two dockers in parallel using docker-compose
+## 4 - Déployer le modèle et l'UX sur l'instance GCP
 
-!!! warning
+Nous allons créer une machine virtuelle dans laquelle nous allons lancer les deux containers
 
-    Ne fonctionne pas sur codespace
+### 4.1 Création de la VM
+
+Nous allons directement créer une machine avec le container du modèle déjà lancé
+
+Commençons par créer une instance GCP bien configurée depuis laquelle se connecter:
+
+**N'oubliez pas de renommer le nom de votre instance**
+
+```bash
+export INSTANCE_NAME="tp-deployment-{yourgroup}-{yourname}" # Don't forget to replace values !
+```
+
+```bash
+gcloud compute instances create $INSTANCE_NAME \
+        --zone="europe-west1-b" \
+        --machine-type="n1-standard-2" \
+        --image-family="common-cpu" \
+        --image-project="deeplearning-platform-release" \
+        --maintenance-policy=TERMINATE \
+        --scopes="storage-rw" \
+        --boot-disk-size=75GB
+```
+
+Récuperez l'ip publique de la machine (via l'interface google cloud ou bien en faisant `gcloud compute instances list | grep {votre instance}` et notez là bien
+
+Depuis le github codespace, connectez vous à la machine
+
+```bash
+    gcloud compute ssh {user}@{instance}
+```
+
+### 4.2 Execution des containers
+
+!!! hint
+
+    A executer dans la VM GCP
 
 On va utiliser `docker compose` pour lancer les deux applications en simultané de sorte à ce qu'elles communiquent
 
@@ -1112,24 +1148,24 @@ On va utiliser `docker compose` pour lancer les deux applications en simultané 
 - Fermez tous les dockers etc.
 - Créez un fichier `docker-compose.yml`
   
-Ajoutez-y ce contenu:
+Sur votre codespace, créez ce fichier et modifiez le nom des images avec celles que vous avez utilisées (respectivement model et frontend)
 
 ```yaml
 version: '3'
 services:
   yolo:
-    image: "test-yolo-v5:dummy"
+    image: "eu.gcr.io/third-ridge-138414/yolo-v5:1.2"
     ports:
       - "8000:8000"
     hostname: yolo
   streamlit:
-    image: "test-yolo-v5-streamlit:dummy"
+    image: "eu.gcr.io/third-ridge-138414/yolo-v5-streamlit:1.2"
     ports:
       - "8501:8501"
     hostname: streamlit
 ```
 
-Modifiez les noms des images avec celles que vous avez utilisées
+Copiez ensuite ce texte sur la VM dans un fichier `docker-compose.yml` (exemple : via nano)
 
 On constate qu'on déclare 2 services:
 - 1 service "yolo"
@@ -1141,53 +1177,24 @@ Maintenant... comment lancer les deux applications ?
 
 `docker-compose up` dans le dossier où se trouve votre `docker-compose.yml`
 
-Si `docker-compose` ne fonctionne pas, `sudo apt -y install docker-compose`
+!!! hint
+
+    Si `docker-compose` ne fonctionne pas, `sudo apt -y install docker-compose`
 
 Normalement:
 - le service de modèle est accessible sur le port 8000 de la machine
 - le service streamlit est accessible sur le port 8501 de la machine
 - vous devez indiquer l'hostname "yolo" pour communiquer entre streamlit et le modèle. En effet, les services sont accessibles via un réseau spécial "local" entre tous les containers lancés via docker-compose
 
-## 4 - Déployer le modèle et l'UX sur deux instances GCP
+### Accès à la VM
 
-!!! warning
+!!! hint
 
-    A mettre à jour en séance
+    Cela ne risque de fonctionner que en 4G
 
-#### 4.2 Create the VM
+Connectez vous via l'IP publique de la machine via votre navigateur web, sur le port 8501 : `http://ip-de-la-machine:8501`
 
-Nous allons directement créer une machine avec le container du modèle déjà lancé
-
-Commençons par créer une instance GCP bien configurée depuis laquelle se connecter:
-
-```bash
-export INSTANCE_NAME="tp-deployment-{yourgroup}-{yourname}" # Don't forget to replace values !
-```
-
-```bash
-gcloud compute instances create $INSTANCE_NAME \
-        --zone="europe-west4-a" \
-        --machine-type="n1-standard-1" \
-        --image-family="common-cpu" \
-        --image-project="deeplearning-platform-release" \
-        --maintenance-policy=TERMINATE \
-        --scopes="storage-rw" \
-        --boot-disk-size=75GB
-```
-
-Récuperez l'ip publique de la machine (via l'interface google cloud ou bien en faisant `gcloud compute instances list | grep {votre instance}` et notez là bien
-
-Depuis le [google cloud shell](shell.cloud.google.com) - ou depuis votre machine si vous avez google cloud sdk d'installé localement et que vous êtes sous eduroam,
-
-```bash
-    gcloud compute ssh {user}@{instance} -- \
-        -L 8080:localhost:8080 \
-        -L 8080:localhost:8080
-```
-
-Vous pouvez ensuite aller sur localhost:8080 (install locale) ou faire un web preview depuis cloud shell sur le port 8080 de cloud shell,
-
-Vous devriez être dans un jupyter lab
+Vous devriez pouvoir accéder à votre déploiement !
 
 ## Conclusion
 

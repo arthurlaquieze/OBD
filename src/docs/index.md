@@ -56,16 +56,16 @@ Data Computation | | | Readings |
 --- | --- | --- | ---
 [Cloud Computing & Google Cloud Platform](1_1_overview.md) | 3h | 23/01/2023 | [Readings](1_7_readings.md#about-cloud-computing) |
 [Containers](1_1_overview.md) | 3h| 24/01/2022 | [Readings](1_7_readings.md#about-containers)
-[Cloud Compute BE](1_1_overview.md) | 3h | 31/01/2022 | 
+[Cloud Compute BE](1_1_overview.md) | 3h | 07/02/2022 | 
 GPU computing | 6h | 01/02/2023 |
-[Deployement, BE 2, Orchestration](1_1_overview.md) | 3h | 06/02/2023 | [Readings](1_7_readings.md#about-orchestration) |
+[Deployement, BE 2, Orchestration](1_1_overview.md) | 3h | 13/02/2023 | [Readings](1_7_readings.md#about-orchestration) |
 Quiz and Recap | 2h | 13/02/2023 |
 
 | Data Distribution | | | Readings |
 | --- | --- | --- | --- |
-| [Hadoop and MapReduce](2_3_mapreduce.md) | 3h | 07/02/2023 | [MapReduce](https://raw.githubusercontent.com/SupaeroDataScience/OBD/master/readings/mapreduce.pdf) |
-| [Spark](2_4_spark.md) | 4h | 07/02/2023 | [Spark](https://raw.githubusercontent.com/SupaeroDataScience/OBD/master/readings/spark.pdf) [PySpark](https://spark.apache.org/docs/latest/api/python/pyspark.html) |
-| [Dask on Kubernetes](2_5_dask.md)| 3h | 14/02/2023 | [Dask documentation](https://docs.dask.org/en/latest/setup/kubernetes.html) |
+| [Hadoop and MapReduce](2_3_mapreduce.md) | 3h | 14/02/2023 | [MapReduce](https://raw.githubusercontent.com/SupaeroDataScience/OBD/master/readings/mapreduce.pdf) |
+| [Spark](2_4_spark.md) | 4h | 14/02/2023 | [Spark](https://raw.githubusercontent.com/SupaeroDataScience/OBD/master/readings/spark.pdf) [PySpark](https://spark.apache.org/docs/latest/api/python/pyspark.html) |
+| [Dask on Kubernetes](2_5_dask.md)| 3h | 07/03/2023 | [Dask documentation](https://docs.dask.org/en/latest/setup/kubernetes.html) |
 | [Dask project](2_6_project.md) | 6h | 08/03/2023 | [Dask](https://raw.githubusercontent.com/SupaeroDataScience/OBD/master/readings/dask.pdf) |
 
 

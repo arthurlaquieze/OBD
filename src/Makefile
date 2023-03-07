@@ -40,7 +40,10 @@ deploy:
         --css static/css/reset.css \
         --static-dirs static \
         --static ../../slides
+	mv ../slides ../slides_new
 	git checkout gh-pages
+	rm -rf ../slides
+	mv ../slides_new ../slides
 	git add ../slides
 	git commit -m "Updated reveal slides"
 	git push origin gh-pages
@@ -49,3 +52,4 @@ deploy:
 clean:
 	rm -rf site
 	rm -rf ../slides
+	rm -rf ../slides_new
